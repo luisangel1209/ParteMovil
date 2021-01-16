@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.koushikdutta.ion.Ion
 import kotlinx.android.synthetic.main.activity_login.*
 import mx.fei.prointesomovil.pojos.Mensaje
+import mx.fei.prointesomovil.pojos.Pacientes
 import mx.fei.prointesomovil.util.Constantes
 
 class Login : AppCompatActivity() {
@@ -16,7 +17,6 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         title = "Inicio de Sesión"
-
         btIngresar.setOnClickListener {
             validaCampos()
         }
@@ -53,20 +53,27 @@ class Login : AppCompatActivity() {
                     Toast.makeText(this@Login, "Error: "+e.message, Toast.LENGTH_LONG).show()
                 }else{
                     val gson = Gson()
-                    val msj : Mensaje = gson.fromJson(result, Mensaje::class.java)
-                    if(msj.error!!) {
-                        Toast.makeText(this@Login, "NO jala"+msj.mensaje, Toast.LENGTH_LONG).show()
+                    val datos : Pacientes = gson.fromJson(result, Pacientes::class.java)
+                    if(datos.peso == null) {
+                        Toast.makeText(this@Login, ""+datos.usuario, Toast.LENGTH_LONG).show()
                     }else{
-                        Toast.makeText(this@Login, "Bienvenido", Toast.LENGTH_LONG).show()
-                        irPrincipal()
+                        Toast.makeText(this@Login, "Bienvenido "+datos.nombre, Toast.LENGTH_LONG).show()
+                        datos.nombre?.let { irPrincipal(username, password, it) }
                     }
                 }
             }
-    }
+        }
 
-    fun irPrincipal(){
-        startActivity(Intent(this@Login, PrincipalActivity::class.java))
+    fun irPrincipal(username: String,password: String,nombre: String) {
+        //startActivity(Intent(this@Login, MainActivity::class.java))
+        //this.finish()
+        val i = Intent(this@Login, MainActivity::class.java)
+        i.putExtra("Usuario", username)
+        i.putExtra("Contra", password)
+        i.putExtra("Nombre", nombre)
+        startActivity(i)
         this.finish()
+
     }
 
 }

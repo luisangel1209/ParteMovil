@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textBienvenido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -15,6 +16,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.068"
         tools:text="@string/Bienvenido" />
+
+    <Button
+        android:id="@+id/informacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:text="@string/VerInformacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textBienvenido" />
+
+    <Button
+        android:id="@+id/citas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/VerCitas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/informacion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
