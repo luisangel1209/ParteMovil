@@ -14,8 +14,8 @@ class InformacionConsultaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_informacion_dietas)
-        title = "Detalle dieta"
+        setContentView(R.layout.activity_informacion_consulta)
+        title = "Detalle Consulta"
         isEdicion = intent.getBooleanExtra("isEdicion", false)
         intent.getStringExtra("datos")?.let {
             datosEdicion = it

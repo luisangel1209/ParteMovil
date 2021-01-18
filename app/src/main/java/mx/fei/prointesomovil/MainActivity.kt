@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         dietas.setOnClickListener {
             dietas()
         }
+        consultas.setOnClickListener {
+            consultas()
+        }
     }
 
     fun irInfo(){
@@ -52,5 +55,12 @@ class MainActivity : AppCompatActivity() {
         val i = Intent(this@MainActivity, DietasActivity::class.java)
         i.putExtra("idpaciente", idpaciente)
         startActivity(i)
+    }
+
+    fun consultas(){
+        val bundle = intent.extras
+        val idpaciente = bundle?.getInt("idPaciente")
+        val i = Intent(this@MainActivity, ConsultasActivity::class.java)
+        i.putExtra("idpaciente", idpaciente)
     }
 }
