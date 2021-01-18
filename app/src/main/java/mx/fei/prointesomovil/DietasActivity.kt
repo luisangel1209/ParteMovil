@@ -9,59 +9,61 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.koushikdutta.ion.Ion
-import kotlinx.android.synthetic.main.activity_citas.*
+import kotlinx.android.synthetic.main.activity_dietas.*
 import mx.fei.prointesomovil.Interfaz.ClicLista
 import mx.fei.prointesomovil.adaptador.AdaptadorListaCitas
+import mx.fei.prointesomovil.adaptador.AdaptadorListaDietas
 import mx.fei.prointesomovil.pojos.Citas
+import mx.fei.prointesomovil.pojos.Dietas
 import mx.fei.prointesomovil.util.Constantes
 
-class CitasActivity : AppCompatActivity(), ClicLista {
+class DietasActivity : AppCompatActivity(), ClicLista {
 
-    private var citas = ArrayList<Citas>()
+    private var dietas = ArrayList<Dietas>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_citas)
-        title = "Mis citas"
+        setContentView(R.layout.activity_dietas)
+        title = "Mis Dietas"
         descargaListaWS()
     }
 
     fun descargaListaWS(){
         val bundle = intent.extras
         val idPaciente = bundle?.getInt("idpaciente")
-        Ion.with(this@CitasActivity)
-            .load("POST", Constantes.URL_WS+"ProyectoIntegracion/ws/fitNuutrition/citaPaciente")
+        Ion.with(this@DietasActivity)
+            .load("POST", Constantes.URL_WS+"ProyectoIntegracion/ws/fitNutrition/dietaPaciente")
             .setHeader("Content-Type", "application/x-www-form-urlencoded")
             .setBodyParameter("idPaciente", idPaciente.toString())
             .asString()
             .setCallback { e, result ->
                 if (e != null){
                     e.printStackTrace()
-                    Toast.makeText(this@CitasActivity, e.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@DietasActivity, e.message, Toast.LENGTH_LONG).show()
                 }else{
                     Log.d("RESPUESTA WS", result)
                     val gson = Gson()
-                    val arrType = object: TypeToken<ArrayList<Citas>>() {}.type
-                    citas = gson.fromJson(result, arrType)
+                    val arrType = object: TypeToken<ArrayList<Dietas>>() {}.type
+                    dietas = gson.fromJson(result, arrType)
                     cargaElementosLista()
                 }
             }
     }
 
     fun cargaElementosLista(){
-        val adaptadorCitas = AdaptadorListaCitas()
-        adaptadorCitas.citas = citas
-        adaptadorCitas.listener = this
-        val layoutManager = LinearLayoutManager(this@CitasActivity)
-        listaCitas.layoutManager = layoutManager
-        listaCitas.adapter = adaptadorCitas
+        val adaptadorDietas = AdaptadorListaDietas()
+        adaptadorDietas.dietas = dietas
+        adaptadorDietas.listener = this
+        val layoutManager = LinearLayoutManager(this@DietasActivity)
+        listaDietas.layoutManager = layoutManager
+        listaDietas.adapter = adaptadorDietas
     }
 
     override fun clicElementoEditar(posicion: Int) {
-        val edicion = citas[posicion]
+        val edicion = dietas[posicion]
         val gson = Gson()
         val datoEdicion = gson.toJson(edicion)
-        val intent = Intent(this@CitasActivity, InformacionCitasActivity::class.java)
+        val intent = Intent(this@DietasActivity, InformacionDietasActivity::class.java)
         intent.putExtra("isEdicion", true)
         intent.putExtra("datos", datoEdicion)
         startActivity(intent)

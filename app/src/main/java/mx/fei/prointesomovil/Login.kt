@@ -58,19 +58,20 @@ class Login : AppCompatActivity() {
                         Toast.makeText(this@Login, ""+datos.usuario, Toast.LENGTH_LONG).show()
                     }else{
                         Toast.makeText(this@Login, "Bienvenido "+datos.nombre, Toast.LENGTH_LONG).show()
-                        datos.nombre?.let { irPrincipal(username, password, it) }
+                        datos.nombre?.let { irPrincipal(username, password, it, datos.idPaciente) }
                     }
                 }
             }
         }
 
-    fun irPrincipal(username: String,password: String,nombre: String) {
+    fun irPrincipal(username: String,password: String,nombre: String, idpaciente: Int) {
         //startActivity(Intent(this@Login, MainActivity::class.java))
         //this.finish()
         val i = Intent(this@Login, MainActivity::class.java)
         i.putExtra("Usuario", username)
         i.putExtra("Contra", password)
         i.putExtra("Nombre", nombre)
+        i.putExtra("idPaciente", idpaciente)
         startActivity(i)
         this.finish()
 
